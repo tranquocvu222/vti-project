@@ -1,3 +1,24 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: vti-api-config
+  namespace: vti-demo
+data:
+  email: tranquocvu222@gmail.com
+
+---
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: vti-api-secret
+  namespace: vti-demo
+data:
+  username: dnV0cQ==
+  password: CHZ0aS1kZW1v
+
+---
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -13,6 +34,13 @@ spec:
       labels:
         app: vti-api-demo
     spec:
+      volumes:
+        - name: config-map-volume
+          configMap:
+            name: vti-api-config
+        - name: secret-volume
+          secret:
+            secretName: vti-api-secret
       containers:
         - name: vti-api-container
           image: tranquocvu222/vti-project:1
@@ -26,6 +54,11 @@ spec:
             httpGet:
               path: /actuator/health
               port: 8082
+          volumeMounts:
+            - name: config-map-volume
+              mountPath: "/api-config-map"
+            - name: secret-volume
+              mountPath: "/api-secret"
 
 
 
