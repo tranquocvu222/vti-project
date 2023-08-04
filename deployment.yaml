@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vti-api-demo-deployment
+  namespace: vti-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vti-api-demo
+  template:
+    metadata:
+      labels:
+        app: vti-api-demo
+    spec:
+      containers:
+        - name: vti-api-container
+          image: tranquocvu222/vti-project:1
+          ports:
+            - containerPort: 8082
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8082
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8082
+
+
+
