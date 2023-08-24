@@ -133,6 +133,8 @@ terraform destroy
 #Variables on the vti-demo workspace
 variable "AWS_ACCESS_KEY" {}
 variable "AWS_SECRET_KEY" {}
+variable "INSTANCE_NAME" {}
+#...
 
 #Local variables
 variable "ami_id" {
@@ -141,6 +143,8 @@ variable "ami_id" {
 variable "instance_type" {
   description = "instance_type"
 }
+
+#...
 ```
 
 **Step 2:** Create variable on workspace on Hashicorp cloud
@@ -177,18 +181,20 @@ aws_region = "ap-southeast-1"
 ami_id = "ami-091a58610910a87a9"
 instance_type = "t2.medium"
 key_pair_name = "eks_vutq_bastion-keypair"
+security_group_id = "sg-00af2cb2877c86d41"
 ```
 
 **Step 6:** Create EC2 Instance Resource in `main.tf`
 
 ```hcl
 resource "aws_instance" "linux_ec2_instance" {
-  ami           = var.ami_id  # Amazon Linux 2 AMI
-  instance_type = var.instance_type
-  key_name      = var.key_pair_name
-  tags = {
-    Name = var.INSTANCE_NAME
-  }
+   ami           = var.ami_id  # Amazon Linux 2 AMI
+   instance_type = var.instance_type
+   key_name      = var.key_pair_name
+   vpc_security_group_ids = [var.security_group_id]
+   tags = {
+      Name = var.INSTANCE_NAME
+   }
 }
 ```
 **Step 7:** Create `output.tf` file to print some information from created EC2 instance
