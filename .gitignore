@@ -35,3 +35,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+# Ignore Terraform state and lock files
+terraform/keypair/terraform.tfstate.backup
