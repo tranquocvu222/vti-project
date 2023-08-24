@@ -38,3 +38,5 @@ out/
 
 # Ignore Terraform state and lock files
 terraform/keypair/terraform.tfstate.backup
+terraform/ec2/.terraform/providers
+terraform/keypair/.terraform/providers
