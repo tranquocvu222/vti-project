@@ -40,3 +40,8 @@ out/
 terraform/keypair/terraform.tfstate.backup
 terraform/ec2/.terraform/providers
 terraform/keypair/.terraform/providers
+terraform.lock.hcl
+terraform.tfstate
+.terraform/
+terraform.tfstate.backup
+terraform.tfvars
